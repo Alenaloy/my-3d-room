@@ -1,34 +1,54 @@
 
-<!DOCTYPE html>
+
+        }
+
+        model-viewer {
+            width: 100vw<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Concept | Module 1</title>
+    <title>Sintez Space</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
             background: #000;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
             color: #fff;
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
         }
 
-        /* Эффект свечения за моделью */
-        .glow {
-            position: absolute;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
+        /* Экран загрузки */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1s ease-out;
         }
 
+        .loader-text {
+            font-size: 14px;
+            letter-spacing: 0.8em;
+            text-transform: uppercase;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Основной интерфейс */
         .interface {
             position: absolute;
             top: 40px;
@@ -40,21 +60,12 @@
             font-size: 10px;
             letter-spacing: 0.4em;
             text-transform: uppercase;
-            border-left: 1px solid #fff;
-            padding-left: 15px;
-            margin: 0;
-            opacity: 0.6;
+            opacity: 0.4;
+            margin: 0;;
+            height: 100vh;
         }
 
-        model-viewer {
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            /* Плавное проявление при загрузке */
-            transition: opacity 1.5s ease;
-        }
-
-        /* Скрываем всё, что стандартно идет с моделью */
+        /* Убираем стандартные элементы управления загрузкой */
         model-viewer::part(default-progress-bar) {
             display: none;
         }
@@ -62,7 +73,10 @@
 </head>
 <body>
 
-    <div class="glow"></div>
+    <!-- Экран загрузки -->
+    <div id="loader">
+        <div class="loader-text">Sintez Space</div>
+    </div>
 
     <div class="interface">
         <h1>Module 1</h1>
@@ -72,22 +86,20 @@
         src="room.glb"
         camera-controls
         auto-rotate
-        auto-rotate-delay="0"
-        rotation-per-second="10deg"
-        shadow-intensity="0"
-        exposure="1"
-        camera-orbit="0deg 75deg 8m"
-        min-camera-orbit="auto auto 5m"
-        max-camera-orbit="auto auto 15m"
-        interpolation-decay="200">
+        shadow-intensity="1"
+        camera-orbit="0deg 75deg 8m">
     </model-viewer>
 
     <script>
-        // Скрипт для плавного появления модели после загрузки
+        const loader = document.getElementById('loader');
         const model = document.querySelector('model-viewer');
-        model.style.opacity = "0";
+
+        // Когда модель загружена, скрываем экран загрузки
         model.addEventListener('load', () => {
-            model.style.opacity = "1";
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 1000); // Ждем завершения transition
         });
     </script>
 </body>
