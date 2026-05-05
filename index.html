@@ -1,24 +1,11 @@
-Copyright 2015 The Cormorant Project Aut<!DOCTYPE html>
-<html>
-<head>
-    <title>Моя 3D комната</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    <style>
-        body { margin: 0; background: #222; }
-        model-viewer {
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
-</head>
-<body>
-
-    <model-viewer 
-        src="room.glb" 
-        camera-controls 
-        auto-rotate 
-        shadow-intensity="1">
-    </model-viewer>
-
-</body>
-</html>hors (github.com/CatharsisFonts/Cormorant)
+<model-viewer 
+    src="room.glb" 
+    alt="3D комната в авторском стиле" 
+    auto-rotate 
+    camera-controls 
+    shadow-intensity="2" 
+    shadow-softness="1"
+    exposure="1.2"
+    environment-image="neutral"
+    interpolation-decay="200">
+</model-viewer>
