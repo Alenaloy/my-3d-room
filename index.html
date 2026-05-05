@@ -3,26 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 1</title>
-    
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
-
+    <title>Sintez Space</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <style>
-        html, body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #000000 !important;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%) !important;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            /* Плавный переход: черный -> фиолетовый -> синий */
+            background: linear-gradient(135deg, #000000, #240046, #001233);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             font-family: 'Inter', sans-serif;
+            overflow: hidden;
         }
 
-        /* Убираем индикатор загрузки (ту самую полоску) */
-        model-viewer::part(default-progress-bar) {
-            display: none;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 16px;
+            letter-spacing: 0.8em;
+            text-transform: uppercase;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
         }
 
         .interface {
@@ -30,47 +62,41 @@
             top: 40px;
             left: 40px;
             z-index: 10;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            pointer-events: none;
         }
-
-        h1 {
-            margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        model-viewer {
-            width: 100vw;
-            height: 100vh;
-            display: block;
-            outline: none;
-            --poster-color: transparent;
-        }
+        
+        h1 { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.5; margin: 0; }
     </style>
 </head>
 <body>
+
+    <div id="loader">
+        <div class="loader-text">SINTEZ SPACE</div>
+    </div>
 
     <div class="interface">
         <h1>Module 1</h1>
     </div>
 
-    <model-viewer 
-        src="room.glb" 
-        auto-rotate 
-        camera-controls 
-        shadow-intensity="2"
-        exposure="1.4"
-        loading="eager"
-        interaction-prompt="none">
+    <model-viewer
+        src="room.glb"
+        camera-controls
+        auto-rotate
+        shadow-intensity="1"
+        camera-orbit="0deg 75deg 8m">
     </model-viewer>
 
+    <script>
+        const loader = document.getElementById('loader');
+        const viewer = document.querySelector('model-viewer');
+
+        // Скрываем лоадер сразу как модель будет готова
+        viewer.addEventListener('load', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
