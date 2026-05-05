@@ -2,54 +2,93 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Моя 3D комната</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 - Visual Project</title>
     
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --accent-color: #ff007a;
+            --accent: #000000; /* Глубокий черный для акцентов */
+            --glass: rgba(255, 255, 255, 0.7);
         }
-        body { 
-            margin: 0; 
-            background: radial-gradient(circle, #2c3e50, #000000); 
-            font-family: sans-serif;
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top right, #ffffff, #e0e5ec);
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
+            height: 100vh;
         }
+
+        /* Контейнер для текста в стиле минимализма */
+        .interface {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            padding: 20px 30px;
+            background: var(--glass);
+            backdrop-filter: blur(10px); /* Размытие заднего фона */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2px; /* Острые углы выглядят строже и дороже */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
         model-viewer {
             width: 100vw;
             height: 100vh;
+            outline: none;
+            --poster-color: transparent;
         }
-        .overlay {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            pointer-events: none;
-        }
-        h1 {
-            margin: 0;
-            font-size: 24px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 15px;
-            text-transform: uppercase;
+
+        /* Декоративная линия */
+        .line {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="overlay">
-        <h1>My 3D Space</h1>
-        <p>Интерактивная визуализация</p>
+    <div class="interface">
+        <div class="line"></div>
+        <h1>Module 1</h1>
+        <div class="subtitle">Spatial Experience / 2026</div>
     </div>
 
     <model-viewer 
         src="room.glb" 
-        alt="3D модель" 
+        alt="3D Room Concept" 
         auto-rotate 
         camera-controls 
-        shadow-intensity="2" 
-        exposure="1.2">
+        shadow-intensity="1.5" 
+        shadow-softness="1"
+        exposure="1.1"
+        environment-image="neutral"
+        rotation-per-second="20deg">
     </model-viewer>
 
 </body>
