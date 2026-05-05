@@ -9,3 +9,43 @@
     environment-image="neutral"
     interpolation-decay="200">
 </model-viewer>
+<style>
+    :root {
+        --bg-color: #1a1a1a; /* Темный фон для стиля хай-тек */
+        --accent-color: #ff007a; /* Акцентный цвет (например, ярко-розовый) */
+    }
+
+    body { 
+        margin: 0; 
+        background: radial-gradient(circle, #2c3e50, #000000); /* Красивый градиент */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+    }
+
+    model-viewer {
+        width: 100vw;
+        height: 100vh;
+        --poster-color: transparent;
+    }
+
+    /* Добавим заголовок поверх модели */
+    .overlay {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        pointer-events: none; /* Чтобы можно было крутить модель сквозь текст */
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-left: 4px solid var(--accent-color);
+        padding-left: 15px;
+    }
+</style><div class="overlay">
+    <h1>My 3D Space</h1>
+    <p>Интерактивная визуализация</p>
+</div>
