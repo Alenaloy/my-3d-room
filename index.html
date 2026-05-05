@@ -1,51 +1,56 @@
-<model-viewer 
-    src="room.glb" 
-    alt="3D комната в авторском стиле" 
-    auto-rotate 
-    camera-controls 
-    shadow-intensity="2" 
-    shadow-softness="1"
-    exposure="1.2"
-    environment-image="neutral"
-    interpolation-decay="200">
-</model-viewer>
-<style>
-    :root {
-        --bg-color: #1a1a1a; /* Темный фон для стиля хай-тек */
-        --accent-color: #ff007a; /* Акцентный цвет (например, ярко-розовый) */
-    }
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя 3D комната</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --accent-color: #ff007a;
+        }
+        body { 
+            margin: 0; 
+            background: radial-gradient(circle, #2c3e50, #000000); 
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+        }
+        .overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            pointer-events: none;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
 
-    body { 
-        margin: 0; 
-        background: radial-gradient(circle, #2c3e50, #000000); /* Красивый градиент */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        overflow: hidden;
-    }
+    <div class="overlay">
+        <h1>My 3D Space</h1>
+        <p>Интерактивная визуализация</p>
+    </div>
 
-    model-viewer {
-        width: 100vw;
-        height: 100vh;
-        --poster-color: transparent;
-    }
+    <model-viewer 
+        src="room.glb" 
+        alt="3D модель" 
+        auto-rotate 
+        camera-controls 
+        shadow-intensity="2" 
+        exposure="1.2">
+    </model-viewer>
 
-    /* Добавим заголовок поверх модели */
-    .overlay {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        color: white;
-        pointer-events: none; /* Чтобы можно было крутить модель сквозь текст */
-    }
-
-    h1 {
-        margin: 0;
-        font-size: 24px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        border-left: 4px solid var(--accent-color);
-        padding-left: 15px;
-    }
-</style><div class="overlay">
-    <h1>My 3D Space</h1>
-    <p>Интерактивная визуализация</p>
-</div>
+</body>
+</html>
