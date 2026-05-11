@@ -7,120 +7,73 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
+            margin: 0; padding: 0; height: 100%; width: 100%;
             background-color: #000;
             overflow: hidden;
             font-family: 'Inter', sans-serif;
             color: #fff;
         }
 
-        /* Интерактивные градиентные пятна */
+        /* Эффект звездного неба */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 1px; height: 1px;
+            background: transparent;
+            box-shadow: 10vw 20vh #fff, 50vw 80vh #fff, 80vw 30vh #fff, 20vw 90vh #fff, 90vw 10vh #fff;
+            opacity: 0.3;
+        }
+
         #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(147, 51, 234, 0.4), rgba(59, 130, 246, 0.4), transparent 70%);
+            position: fixed; top: 0; left: 0;
+            width: 500px; height: 500px;
+            /* Более глубокий фиолетовый перелив */
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.1), transparent 70%);
             border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none; /* Чтобы не мешало кликам */
+            filter: blur(100px);
+            pointer-events: none;
             transform: translate(-50%, -50%);
-            opacity: 0; /* Изначально скрыто */
-            transition: opacity 0.5s ease, transform 0.1s ease-out;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.2s ease-out;
             z-index: 0;
         }
 
-        /* Экран загрузки */
         #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 1.5s ease-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: flex; align-items: center; justify-content: center;
+            z-index: 1000; transition: opacity 1.5s ease-out;
         }
 
         .loader-text {
-            font-size: 16px;
-            letter-spacing: 0.8em;
-            text-transform: uppercase;
-            animation: pulse 2s infinite ease-in-out;
+            font-size: 14px; letter-spacing: 0.5em; text-transform: uppercase;
+            opacity: 0.5;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
+        model-viewer { width: 100vw; height: 100vh; z-index: 1; position: relative; }
 
-        model-viewer {
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            position: relative;
-        }
-
-        .interface {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            z-index: 10;
-        }
-        
-        h1 { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.4; margin: 0; }
+        .interface { position: absolute; top: 40px; left: 40px; z-index: 10; pointer-events: none; }
+        h1 { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.6; margin: 0; }
     </style>
 </head>
 <body>
-
+    <div class="stars"></div>
     <div id="cursor-glow"></div>
+    <div id="loader"><div class="loader-text">SINTEZ SPACE</div></div>
 
-    <div id="loader">
-        <div class="loader-text">SINTEZ SPACE</div>
-    </div>
+    <div class="interface"><h1>Module 1</h1></div>
 
-    <div class="interface">
-        <h1>Module 1</h1>
-    </div>
-
-    <model-viewer
-        src="room.glb"
-        camera-controls
-        auto-rotate
-        shadow-intensity="1"
-        camera-orbit="0deg 75deg 8m">
-    </model-viewer>
+    <model-viewer src="room.glb" camera-controls auto-rotate shadow-intensity="1" camera-orbit="0deg 75deg 8m"></model-viewer>
 
     <script>
         const loader = document.getElementById('loader');
-        const viewer = document.querySelector('model-viewer');
         const glow = document.getElementById('cursor-glow');
-
-        // Логика загрузки
-        viewer.addEventListener('load', () => {
-            loader.style.opacity = '0';
-            setTimeout(() => { loader.style.display = 'none'; }, 1500);
+        document.querySelector('model-viewer').addEventListener('load', () => { 
+            loader.style.opacity = '0'; 
+            setTimeout(() => loader.style.display = 'none', 1500); 
         });
 
-        // Логика курсора
         window.addEventListener('mousemove', (e) => {
-            // Перемещаем свечение за курсором
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
-            // Плавно проявляем при первом движении
             glow.style.opacity = '1';
-        });
-
-        // Прячем свечение, если ушли с окна
-        window.addEventListener('mouseout', () => {
-            glow.style.opacity = '0';
         });
     </script>
 </body>
